@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 import google.generativeai as genai
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -12,6 +13,7 @@ class GeminiClient:
     api_key: str
     model_name: str
     temperature: float = 0.4
+    _model: Any = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         genai.configure(api_key=self.api_key)
