@@ -19,6 +19,8 @@ def generate(
     style: str = typer.Option("executive", help="风格: executive|educational|marketing|technical"),
     template: str = typer.Option("consulting", help="模板: consulting|modern|minimal"),
     background: str = typer.Option("light", help="背景: light|dark|gradient"),
+    theme_color: str | None = typer.Option(None, help="主题色（十六进制，如 #3B82F6）"),
+    content_outline: list[str] | None = typer.Option(None, "--content-outline", help="自定义内容提纲，可多次传入"),
 ) -> None:
     settings = load_settings()
     agent = PPTAgent(settings)
@@ -30,6 +32,8 @@ def generate(
         style=style,
         template=template,
         background=background,
+        theme_color=theme_color,
+        content_outline=content_outline,
     )
     typer.echo(f"PPT 已生成: {result}")
 

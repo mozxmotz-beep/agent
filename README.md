@@ -38,7 +38,7 @@ import os
 os.environ["GEMINI_API_KEY"] = "你的 Gemini Key"
 os.environ["GEMINI_MODEL"] = "gemini-1.5-pro"
 
-!ppt-agent generate --topic "AI赋能企业经营分析" --audience "CEO与业务负责人" --slide-count 8 --style executive --template consulting --background gradient --output outputs/ai_strategy.pptx
+!ppt-agent generate --topic "AI赋能企业经营分析" --audience "CEO与业务负责人" --slide-count 8 --style executive --template consulting --background gradient --theme-color "#3B82F6" --content-outline "业务现状" --content-outline "关键问题" --content-outline "策略路径" --content-outline "落地计划" --output outputs/ai_strategy.pptx
 ```
 
 下载文件：
@@ -53,6 +53,8 @@ files.download("outputs/ai_strategy.pptx")
 
 - **背景可设置**：`--background light|dark|gradient`。
 - **模板可设置**：`--template consulting|modern|minimal`。
+- **主题色可设置**：`--theme-color #RRGGBB`。
+- **内容提纲可设置**：`--content-outline` 可多次传入，强约束章节顺序。
 - **内容结构连续**：引入 `narrative_flow` 与每页 `section`，保证从问题到方案再到落地的逻辑推进。
 - **视觉统一**：按模板与背景自动套用标题/正文/强调色。
 
