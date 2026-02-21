@@ -21,17 +21,44 @@ class PPTAgent:
         )
         self.renderer = PPTXRenderer()
 
-    def create_outline(self, topic: str, audience: str, slide_count: int | None = None) -> DeckOutline:
+    def create_outline(
+        self,
+        topic: str,
+        audience: str,
+        slide_count: int | None = None,
+        style: str = "executive",
+        template: str = "consulting",
+        background: str = "light",
+    ) -> DeckOutline:
         count = slide_count or self.settings.default_slide_count
         prompt = render_template(
             "outline_prompt.txt",
             topic=topic,
             audience=audience,
             slide_count=count,
+            style=style,
+            template=template,
+            background=background,
         )
         payload = self.client.generate_json(prompt)
         return DeckOutline.model_validate(payload)
 
-    def run(self, topic: str, audience: str, output_path: Path, slide_count: int | None = None) -> Path:
-        outline = self.create_outline(topic=topic, audience=audience, slide_count=slide_count)
+    def run(
+        self,
+        topic: str,
+        audience: str,
+        output_path: Path,
+        slide_count: int | None = None,
+        style: str = "executive",
+        template: str = "consulting",
+        background: str = "light",
+    ) -> Path:
+        outline = self.create_outline(
+            topic=topic,
+            audience=audience,
+            slide_count=slide_count,
+            style=style,
+            template=template,
+            background=background,
+        )
         return self.renderer.render(outline=outline, output_path=output_path)
