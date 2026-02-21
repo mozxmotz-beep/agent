@@ -38,7 +38,7 @@ import os
 os.environ["GEMINI_API_KEY"] = "你的 Gemini Key"
 os.environ["GEMINI_MODEL"] = "gemini-1.5-pro"
 
-!ppt-agent generate --topic "AI赋能企业经营分析" --audience "CEO与业务负责人" --slide-count 8 --output outputs/ai_strategy.pptx
+!ppt-agent generate --topic "AI赋能企业经营分析" --audience "CEO与业务负责人" --slide-count 8 --style executive --template consulting --background gradient --output outputs/ai_strategy.pptx
 ```
 
 下载文件：
@@ -47,6 +47,14 @@ os.environ["GEMINI_MODEL"] = "gemini-1.5-pro"
 from google.colab import files
 files.download("outputs/ai_strategy.pptx")
 ```
+
+
+## 新增能力（对齐 Manus 风格）
+
+- **背景可设置**：`--background light|dark|gradient`。
+- **模板可设置**：`--template consulting|modern|minimal`。
+- **内容结构连续**：引入 `narrative_flow` 与每页 `section`，保证从问题到方案再到落地的逻辑推进。
+- **视觉统一**：按模板与背景自动套用标题/正文/强调色。
 
 ## 工程化特性
 

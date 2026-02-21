@@ -16,6 +16,10 @@ class SlideSpec(BaseModel):
         default=None,
         description="Hint for future image/chart generation modules.",
     )
+    section: str | None = Field(
+        default=None,
+        description="Narrative section label such as 背景 / 分析 / 策略 / 落地.",
+    )
     layout: Literal["title", "title_and_content", "section", "comparison"] = "title_and_content"
 
     @field_validator("bullets")
@@ -34,4 +38,10 @@ class DeckOutline(BaseModel):
     audience: str = Field(default="general")
     language: str = Field(default="zh-CN")
     style: Literal["executive", "educational", "marketing", "technical"] = "executive"
+    template: Literal["consulting", "modern", "minimal"] = "consulting"
+    background: Literal["light", "dark", "gradient"] = "light"
+    narrative_flow: list[str] = Field(
+        default_factory=lambda: ["开场", "现状", "问题", "方案", "实施", "结论"],
+        description="Deck-level storyline to keep slide progression continuous.",
+    )
     slides: list[SlideSpec] = Field(min_length=3, max_length=30)
