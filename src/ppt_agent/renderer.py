@@ -11,6 +11,11 @@ from pptx.util import Pt
 from .models import DeckOutline, SlideSpec
 
 
+def _hex_to_rgb(color: str) -> RGBColor:
+    code = color.lstrip("#")
+    return RGBColor(int(code[0:2], 16), int(code[2:4], 16), int(code[4:6], 16))
+
+
 @dataclass(frozen=True)
 class ThemeSpec:
     bg_color: RGBColor
@@ -85,6 +90,13 @@ class PPTXRenderer:
 
     def render(self, outline: DeckOutline, output_path: Path) -> Path:
         theme = THEMES[(outline.template, outline.background)]
+        if outline.theme_color:
+            theme = ThemeSpec(
+                bg_color=theme.bg_color,
+                title_color=theme.title_color,
+                body_color=theme.body_color,
+                accent_color=_hex_to_rgb(outline.theme_color),
+            )
         for index, slide in enumerate(outline.slides):
             self._render_slide(index=index, slide=slide, theme=theme)
         output_path.parent.mkdir(parents=True, exist_ok=True)

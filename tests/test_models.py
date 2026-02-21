@@ -28,3 +28,21 @@ def test_deck_theme_defaults() -> None:
     assert outline.template == "consulting"
     assert outline.background == "light"
     assert len(outline.narrative_flow) >= 4
+
+
+def test_theme_color_normalized() -> None:
+    outline = DeckOutline(
+        topic="x",
+        theme_color="3b82f6",
+        slides=[SlideSpec(title="1"), SlideSpec(title="2"), SlideSpec(title="3")],
+    )
+    assert outline.theme_color == "#3B82F6"
+
+
+def test_content_outline_trimmed() -> None:
+    outline = DeckOutline(
+        topic="x",
+        content_outline=[" 背景 ", "", "策略"],
+        slides=[SlideSpec(title="1"), SlideSpec(title="2"), SlideSpec(title="3")],
+    )
+    assert outline.content_outline == ["背景", "策略"]

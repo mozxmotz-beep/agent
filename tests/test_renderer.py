@@ -3,7 +3,7 @@ from pathlib import Path
 from pptx import Presentation
 
 from ppt_agent.models import DeckOutline, SlideSpec
-from ppt_agent.renderer import PPTXRenderer
+from ppt_agent.renderer import PPTXRenderer, _hex_to_rgb
 
 
 def test_renderer_output(tmp_path: Path) -> None:
@@ -25,3 +25,8 @@ def test_renderer_output(tmp_path: Path) -> None:
     result = Presentation(str(target))
     assert result.slides[0].shapes.title.text == "封面"
     assert result.slides[1].shapes.title.text.startswith("分析｜")
+
+
+def test_hex_to_rgb() -> None:
+    rgb = _hex_to_rgb("#3B82F6")
+    assert (rgb[0], rgb[1], rgb[2]) == (59, 130, 246)

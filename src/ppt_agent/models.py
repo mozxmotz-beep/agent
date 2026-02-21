@@ -40,8 +40,33 @@ class DeckOutline(BaseModel):
     style: Literal["executive", "educational", "marketing", "technical"] = "executive"
     template: Literal["consulting", "modern", "minimal"] = "consulting"
     background: Literal["light", "dark", "gradient"] = "light"
+    theme_color: str | None = Field(
+        default=None,
+        description="Optional brand color in #RRGGBB format used as global accent.",
+    )
+    content_outline: list[str] = Field(
+        default_factory=list,
+        description="Optional user-defined storyline constraints for the planner.",
+    )
     narrative_flow: list[str] = Field(
         default_factory=lambda: ["开场", "现状", "问题", "方案", "实施", "结论"],
         description="Deck-level storyline to keep slide progression continuous.",
     )
     slides: list[SlideSpec] = Field(min_length=3, max_length=30)
+
+    @field_validator("theme_color")
+    @classmethod
+    def validate_theme_color(cls, color: str | None) -> str | None:
+        if color is None:
+            return None
+        normalized = color.strip().upper()
+        if normalized.startswith("#"):
+            normalized = normalized[1:]
+        if len(normalized) != 6 or any(ch not in "0123456789ABCDEF" for ch in normalized):
+            raise ValueError("theme_color must be a hex color like #3B82F6")
+        return f"#{normalized}"
+
+    @field_validator("content_outline")
+    @classmethod
+    def validate_content_outline(cls, items: list[str]) -> list[str]:
+        return [item.strip() for item in items if item.strip()]

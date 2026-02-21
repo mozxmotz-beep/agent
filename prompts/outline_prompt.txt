@@ -4,6 +4,9 @@
 要求风格：$style。
 要求模板：$template。
 要求背景：$background。
+要求主题色：$theme_color。
+用户指定内容提纲：
+$content_outline
 
 约束：
 1. 输出必须符合如下结构：
@@ -14,6 +17,8 @@
   "style": "executive|educational|marketing|technical",
   "template": "consulting|modern|minimal",
   "background": "light|dark|gradient",
+  "theme_color": "#RRGGBB | null",
+  "content_outline": ["..."],
   "narrative_flow": ["开场", "现状", "问题", "方案", "实施", "结论"],
   "slides": [
     {
@@ -28,8 +33,10 @@
   ]
 }
 2. slides 数组长度必须等于 $slide_count。
-3. narrative_flow 与 slides 的 section 必须前后连贯，保证逻辑推进（问题→分析→策略→落地→结论）。
-4. 每页 bullets 最多 5 条，每条不超过 30 字，避免空话。
-5. 首页 layout 使用 title，其他页优先 title_and_content。
-6. 内容要专业、美观、结构严谨，适合直接汇报。
-7. 不要返回 markdown、解释或代码块。
+3. 优先遵循 content_outline 的顺序生成 slides；若未提供则按 narrative_flow 规划。
+4. narrative_flow 与 slides 的 section 必须前后连贯，保证逻辑推进（问题→分析→策略→落地→结论）。
+5. 每页 bullets 最多 5 条，每条不超过 30 字，避免空话。
+6. 首页 layout 使用 title，其他页优先 title_and_content。
+7. 若 theme_color 非 default，请在输出中原样写入 theme_color 字段。
+8. 内容要专业、美观、结构严谨，适合直接汇报。
+9. 不要返回 markdown、解释或代码块。
