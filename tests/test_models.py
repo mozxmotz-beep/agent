@@ -14,3 +14,29 @@ def test_deck_requires_enough_slides() -> None:
     except ValidationError:
         return
     raise AssertionError("Expected validation error")
+
+
+def test_deck_theme_defaults() -> None:
+    outline = DeckOutline(
+        topic="x",
+        slides=[
+            SlideSpec(title="1"),
+            SlideSpec(title="2"),
+            SlideSpec(title="3"),
+        ],
+    )
+    assert outline.template == "consulting"
+    assert outline.background == "light"
+    assert len(outline.narrative_flow) >= 4
+
+
+def test_narrative_flow_requires_min_stages() -> None:
+    try:
+        DeckOutline(
+            topic="x",
+            narrative_flow=["开场"],
+            slides=[SlideSpec(title="1"), SlideSpec(title="2"), SlideSpec(title="3")],
+        )
+    except ValidationError:
+        return
+    raise AssertionError("Expected validation error")

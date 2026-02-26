@@ -16,10 +16,21 @@ def generate(
     audience: str = typer.Option("管理层", help="目标受众"),
     output: Path = typer.Option(Path("outputs/deck.pptx"), help="输出 PPTX 路径"),
     slide_count: int = typer.Option(8, min=3, max=30, help="页数"),
+    style: str = typer.Option("executive", help="风格: executive|educational|marketing|technical"),
+    template: str = typer.Option("consulting", help="模板: consulting|modern|minimal"),
+    background: str = typer.Option("light", help="背景: light|dark|gradient"),
 ) -> None:
     settings = load_settings()
     agent = PPTAgent(settings)
-    result = agent.run(topic=topic, audience=audience, output_path=output, slide_count=slide_count)
+    result = agent.run(
+        topic=topic,
+        audience=audience,
+        output_path=output,
+        slide_count=slide_count,
+        style=style,
+        template=template,
+        background=background,
+    )
     typer.echo(f"PPT 已生成: {result}")
 
 
